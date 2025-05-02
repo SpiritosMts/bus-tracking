@@ -1,0 +1,118 @@
+{
+  "project_info": {
+    "project_number": "90980390183",
+    "project_id": "studenist-61999",
+    "storage_bucket": "studenist-61999.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90980390183:android:20859d44d2fc7781818502",
+        "android_client_info": {
+          "package_name": "com.example.bus_tracking_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeS8hW_p2eLaCLfZWvRArE95WSp3fePxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90980390183-cl0ggjbsjtaqtarm6o9ebvtitjbihqve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spdev.studenist"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90980390183:android:60d718f935ef6f87818502",
+        "android_client_info": {
+          "package_name": "com.example.demo.email_password_login"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeS8hW_p2eLaCLfZWvRArE95WSp3fePxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90980390183-cl0ggjbsjtaqtarm6o9ebvtitjbihqve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spdev.studenist"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90980390183:android:925ce61ad750e7f0818502",
+        "android_client_info": {
+          "package_name": "com.spdev.studenist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeS8hW_p2eLaCLfZWvRArE95WSp3fePxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90980390183-q817hfs26kfvpmk6ibm2tafla3s7v3f8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "90980390183-cl0ggjbsjtaqtarm6o9ebvtitjbihqve.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.spdev.studenist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
