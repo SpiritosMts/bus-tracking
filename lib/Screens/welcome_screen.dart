@@ -1,4 +1,3 @@
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/services.dart';
 import 'registration_screen.dart';
 import 'login_screen.dart';
@@ -71,7 +70,7 @@ class _welcomeScreenState extends State<welcomeScreen> {
                         height: 20,
                       ),
                       Text(
-                        "Welcome to \n KRU Bus Tracking",
+                        "Welcome to \n Bus Tracking",
                         style: GoogleFonts.poppins(
                             fontSize: 34, fontWeight: FontWeight.w700),
                         textAlign: TextAlign.center,

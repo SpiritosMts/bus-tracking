@@ -254,7 +254,7 @@ class _LocationTrackState extends State<LocationTrack> {
                     ]),
                 appBar: AppBar(
                   title: const Text(
-                    'KRU BUSES',
+                    'BUSES',
                     style: TextStyle(
                         color: Colors.deepPurple,
                         fontSize: 24,
@@ -280,8 +280,8 @@ class _LocationTrackState extends State<LocationTrack> {
                       onPressed: () async {
                         await _prefService
                             .removeCache("email", "password")
-                            .whenComplete(() => {
-                                  logout(context),
+                            .whenComplete(() {
+                                  logout(context);
                                 });
                       },
                     )

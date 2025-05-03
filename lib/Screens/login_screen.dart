@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:bus_tracking_new/model/routes.dart';
 import 'package:bus_tracking_new/model/shared_preference.dart';
-import 'package:bus_tracking_new/screens/home_screen.dart';
 import 'package:bus_tracking_new/screens/otp_screen.dart';
 import 'package:bus_tracking_new/screens/registration_screen.dart';
 import 'package:bus_tracking_new/screens/welcome_screen.dart';
@@ -10,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
+import 'package:bus_tracking_new/config/app_config.dart';
 import 'Forgot_Password.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -159,11 +160,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Form(
                   key: _formKey,
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Lottie.asset('assets/images/user-anime.json',
-                          width: 100, height: 100, fit: BoxFit.fill),
+                      Lottie.asset('assets/images/login-anim.json',
+                          width: 200, height: 200, fit: BoxFit.fill),
                       SizedBox(
                         height: 15,
                       ),
@@ -265,14 +266,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       emailController.text, passwordController.text),
                   user = auth.currentUser!,
                   await user.reload(),
-                  if (user.emailVerified)
+                  
+                  // Update user status to active in Firestore
+                  await FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(user.uid)
+                    .update({
+                      'userStatus': 'active'
+                    }),
+                  
+                  // Check if OTP verification is enabled in app config
+                  if (!AppConfig.enableOtpVerification || user.emailVerified)
                     {
-                      Navigator.of(context).pop,
+                      // Either OTP verification is disabled or email is already verified
+                      Fluttertoast.showToast(msg: "Login Successful"),
+                      Navigator.of(context).pop(),
                       Navigator.of(context).pushReplacementNamed(homeRoute)
                     }
                   else
                     {
-                      Navigator.of(context).pop,
+                      // OTP verification is enabled and email is not verified
+                      Fluttertoast.showToast(msg: "Email verification required"),
+                      Navigator.of(context).pop(),
                       Navigator.of(context).pushReplacement(
                           MaterialPageRoute(builder: (context) => otpscreen()))
                     }
@@ -300,8 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
           default:
             errorMessage = "An undefined Error happened.";
         }
-        Navigator.of(context).pop;
-        Navigator.of(context).pushReplacementNamed(loginRoute);
+        Navigator.of(context).pop();
         Fluttertoast.showToast(msg: errorMessage!);
         print(error.code);
       }

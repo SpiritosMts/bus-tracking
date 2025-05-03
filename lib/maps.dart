@@ -1,13 +1,9 @@
 // ignore_for_file: prefer_final_fields, prefer_const_constructors
 
-import 'dart:async';
 
 import 'package:custom_info_window/custom_info_window.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
-import 'package:provider/provider.dart';
 
 import 'map_style.dart';
 

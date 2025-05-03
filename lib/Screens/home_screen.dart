@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:bus_tracking_new/model/shared_preference.dart';
-import 'package:bus_tracking_new/model/user_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'login_screen.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import '../PassengerMode.dart';       // Import for PassengerMode
+import '../Screens/map_screen.dart';  // Import for MapScreen
+import '../Screens/settings_screen.dart'; // Import for SettingsScreen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,10 +13,23 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
-
-  PrefService _prefService = PrefService();
+  // Index for the current selected tab
+  int _selectedIndex = 0;
+  
+  // List of screens to display
+  late List<Widget> _screens;
+  
+  @override
+  void initState() {
+    super.initState();
+    
+    // Initialize the screens list
+    _screens = [
+      MapScreen(),
+      PassengerMode(),
+      SettingsScreen(),
+    ];
+  }
 
   Future<bool?> _onBackPressed() async {
     return showDialog(
@@ -45,9 +56,6 @@ class _HomeScreenState extends State<HomeScreen> {
         });
   }
 
-  final Stream<QuerySnapshot>users=
-    FirebaseFirestore.instance.collection('users').snapshots();
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -58,92 +66,57 @@ class _HomeScreenState extends State<HomeScreen> {
         }
         return result;
       },
-      child: new Scaffold(
+      child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back,
-              color: Colors.black,
-              size: 30,
+          title: Text(
+            _selectedIndex == 0 ? "Bus Tracker" : 
+            _selectedIndex == 1 ? "Be Seen" : "Settings",
+            style: TextStyle(
+              color: Colors.deepPurple,
+              fontWeight: FontWeight.bold,
             ),
-            onPressed: () {
-              _onBackPressed();
-            },
+          ),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.notifications, color: Colors.deepPurple),
+              onPressed: () {
+                // Do nothing for now
+              },
+            ),
+          ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(3.0), // thickness of the underline
+            child: Container(
+              color: Colors.deepPurple,
+              height: 3.0,
+            ),
           ),
         ),
-        body: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 150,
-                  child: Image.asset("assets/images/logo.png",
-                      fit: BoxFit.contain),
-                ),
-                Text(
-                  "Welcome Back",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height:250,
-                  padding:const EdgeInsets.symmetric(vertical:20),
-                  child:StreamBuilder<QuerySnapshot>(
-                    stream:users,
-                    builder:(
-                        BuildContext context,
-                      AsyncSnapshot<QuerySnapshot>snapshot,){
-                        if(snapshot.hasError){
-                          return Text('Something went wrong.');
-                        }
-                        if(snapshot.connectionState == ConnectionState.waiting){
-                          return Text('Loading');
-                        }
-                        final data=snapshot.requireData;
-
-                        return ListView.builder(
-                        itemCount:data.size,
-                          itemBuilder:(context,index){
-                            return Text('${data.docs[index]['fullname']} ${data.docs[index]['email']}');
-                          }
-                        );
-                      }
-                    )
-                  ),  
-             
-                ActionChip(
-                  label: Text("Logout"),
-                  onPressed: () async {
-                    await _prefService
-                      .removeCache("email", "password")
-                      .whenComplete(() => {
-                        logout(context),
-                      });
-                  }
-                ),
-              ],
-            ),
-          ),
-        )
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _screens,
+        ),
+        bottomNavigationBar: CurvedNavigationBar(
+          index: _selectedIndex,
+          backgroundColor: Colors.transparent,
+          color: Colors.deepPurple,
+          animationDuration: const Duration(milliseconds: 300),
+          height: 60,
+          items: [
+            Icon(Icons.map, color: Colors.white),
+            Icon(Icons.directions_bus, color: Colors.white),
+            Icon(Icons.settings, color: Colors.white),
+          ],
+          onTap: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+        ),
       )
     );
-  }
-
-  // the logout function
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }

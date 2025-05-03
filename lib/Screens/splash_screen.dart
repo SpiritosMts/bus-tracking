@@ -3,7 +3,6 @@ import 'package:bus_tracking_new/model/shared_preference.dart';
 import 'package:bus_tracking_new/model/routes.dart';
 import 'package:flutter/material.dart';
 
-import 'home_screen.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({Key? key}) : super(key: key);
